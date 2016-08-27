@@ -7,8 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "Operation.h"
 
 @interface ViewController ()
+@property(nonatomic, strong) Operation *operation;
+@property (nonatomic, copy) NSString *operationSign;
+
 
 @end
 
@@ -16,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.operation = [[Operation  alloc] init];
 }
 
 

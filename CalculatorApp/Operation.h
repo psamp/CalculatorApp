@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Operation.h"
 
 @interface Operation : NSObject
 
+@property (nonatomic) NSInteger firstOperand;
+@property (nonatomic) NSInteger secondOperand;
+
+-(void)resetBothOperands;
+-(NSInteger) addition;
+-(NSInteger) subtraction;
+-(NSInteger) multiplication;
+-(NSInteger) division;
+
 @end
+
