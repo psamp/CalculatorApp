@@ -15,6 +15,7 @@
 		740060B91D6F9B5A00EFF1BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 740060B71D6F9B5A00EFF1BA /* LaunchScreen.storyboard */; };
 		740060C41D6F9B5B00EFF1BA /* CalculatorAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 740060C31D6F9B5B00EFF1BA /* CalculatorAppTests.m */; };
 		740060CF1D6F9B5B00EFF1BA /* CalculatorAppUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 740060CE1D6F9B5B00EFF1BA /* CalculatorAppUITests.m */; };
+		7441D5EA1D71D994006063A1 /* Operation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7441D5E91D71D994006063A1 /* Operation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		740060CA1D6F9B5B00EFF1BA /* CalculatorAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalculatorAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		740060CE1D6F9B5B00EFF1BA /* CalculatorAppUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorAppUITests.m; sourceTree = "<group>"; };
 		740060D01D6F9B5B00EFF1BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7441D5E81D71D994006063A1 /* Operation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Operation.h; sourceTree = "<group>"; };
+		7441D5E91D71D994006063A1 /* Operation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Operation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 		740060A81D6F9B5A00EFF1BA /* CalculatorApp */ = {
 			isa = PBXGroup;
 			children = (
+				7441D5E81D71D994006063A1 /* Operation.h */,
+				7441D5E91D71D994006063A1 /* Operation.m */,
 				740060AC1D6F9B5A00EFF1BA /* AppDelegate.h */,
 				740060AD1D6F9B5A00EFF1BA /* AppDelegate.m */,
 				740060AF1D6F9B5A00EFF1BA /* ViewController.h */,
@@ -276,6 +281,7 @@
 				740060B11D6F9B5A00EFF1BA /* ViewController.m in Sources */,
 				740060AE1D6F9B5A00EFF1BA /* AppDelegate.m in Sources */,
 				740060AB1D6F9B5A00EFF1BA /* main.m in Sources */,
+				7441D5EA1D71D994006063A1 /* Operation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
