@@ -16,35 +16,34 @@
     if (self) {
         _firstOperand = 0;
         _secondOperand = 0;
+        _result = 0;
     }
     return self;
 }
 
--(NSInteger)addition {
-    return self.firstOperand + self.secondOperand;
+-(void)addition {
+    self.result = self.firstOperand + self.secondOperand;
 }
 
--(NSInteger)subtraction {
-    return self.firstOperand - self.secondOperand;
+-(void)subtraction {
+    self.result = self.firstOperand - self.secondOperand;
 }
 
--(NSInteger)multiplication {
-    return self.firstOperand * self.secondOperand;
+-(void)multiplication {
+    self.result = self.firstOperand * self.secondOperand;;
 }
 
--(NSInteger)division {
-    NSInteger rtn = INT_MAX;
+-(void)division {
     
     if(self.secondOperand != 0) {
-        rtn = self.firstOperand / self.secondOperand;
+        self.result = self.firstOperand / self.secondOperand;
     }
-    
-    return rtn;
 }
 
--(void)resetBothOperands {
+-(void)reset {
     self.firstOperand = 0;
     self.secondOperand = 0;
+    self.result = 0;
 }
 
 @end

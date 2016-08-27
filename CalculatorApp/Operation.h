@@ -13,12 +13,13 @@
 
 @property (nonatomic) NSInteger firstOperand;
 @property (nonatomic) NSInteger secondOperand;
+@property (nonatomic) NSInteger result;
 
--(void)resetBothOperands;
--(NSInteger) addition;
--(NSInteger) subtraction;
--(NSInteger) multiplication;
--(NSInteger) division;
+-(void)reset;
+-(void) addition;
+-(void) subtraction;
+-(void) multiplication;
+-(void) division;
 
 @end
 
