@@ -61,6 +61,9 @@
     
     [self updateLabel:self.operationSignLabel with:@""];
     [self updateLabel:self.secondOperandLabel with:@""];
+    
+    self.operation.firstOperand = self.operation.result;
+    self.operation.secondOperand = 0;
 }
 
 - (IBAction)buildOperand:(UIButton*)sender {
@@ -101,10 +104,5 @@
 - (NSString*)getStringFromNSInteger:(NSInteger)integer {
     return [NSString stringWithFormat:@"%@", @(integer)];
 }
-
-
-
-
-
 
 @end

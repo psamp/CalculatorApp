@@ -11,9 +11,9 @@
 
 @interface Operation : NSObject
 
-@property (nonatomic) NSInteger firstOperand;
-@property (nonatomic) NSInteger secondOperand;
-@property (nonatomic) NSInteger result;
+@property (nonatomic, readwrite) NSInteger firstOperand;
+@property (nonatomic, readwrite) NSInteger secondOperand;
+@property (nonatomic, readwrite) NSInteger result;
 
 -(void)reset;
 -(void) addition;
