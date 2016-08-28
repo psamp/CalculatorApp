@@ -13,7 +13,7 @@
 
 @property (nonatomic, readwrite) NSInteger firstOperand;
 @property (nonatomic, readwrite) NSInteger secondOperand;
-@property (nonatomic, readwrite) NSInteger result;
+@property (nonatomic, readonly) NSInteger result;
 
 -(void)reset;
 -(void) addition;

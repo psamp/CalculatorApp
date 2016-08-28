@@ -8,10 +8,13 @@
 
 #import "Operation.h"
 
+@interface Operation ()
+@property (nonatomic, readwrite) NSInteger result;
+@end
+
 @implementation Operation
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         _firstOperand = 0;

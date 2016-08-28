@@ -19,12 +19,17 @@
 @property (nonatomic, copy) NSString *operationSign;
 
 - (IBAction)calculate:(UIButton*)sender;
-- (IBAction)buildOperand:(UIButton*)sender;
+- (IBAction)getOperand:(UIButton*)sender;
 - (IBAction)allClear:(UIButton*)sender;
 
-- (void)updateLabel:(UILabel*)label with:(NSString*)text;
-- (IBAction)updateSign:(UIButton*)sender;
+- (void)updateViewFirstOperandAndAnswerLabel:(NSString*)firstOperandAndAnswer
+                               secondOperand:(NSString*)secondOperand
+                               operationSign:(NSString*)sign;
 
+- (void)updateModelFirstOperand:(NSInteger)firstOperand
+                  secondOperand:(NSInteger)secondOperand;
+
+- (IBAction)updateSign:(UIButton*)sender;
 - (NSString*)getStringFromNSInteger:(NSInteger)integer;
 
 @end
@@ -41,32 +46,56 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)updateViewFirstOperandAndAnswerLabel:(NSString *)firstOperandAndAnswer
+                               secondOperand:(NSString *)secondOperand
+                               operationSign:(NSString *)sign {
+    self.firstOperandAndAnswerLabel.text = firstOperandAndAnswer;
+    self.secondOperandLabel.text = secondOperand;
+    self.operationSignLabel.text = sign;
+    
+}
+
+- (void)updateModelFirstOperand:(NSInteger)firstOperand
+                  secondOperand:(NSInteger)secondOperand {
+    
+    if(self.operation.firstOperand != firstOperand) {
+        self.operation.firstOperand = firstOperand;
+    }
+    
+    if(self.operation.secondOperand != secondOperand) {
+        self.operation.secondOperand = secondOperand;
+    }
+}
 
 - (IBAction)calculate:(UIButton *)sender {
     
     NSString *chosenOperation = self.operationSignLabel.text;
+    NSString *resultString = [NSString string];
     
-    if ([chosenOperation isEqual: @"+"]) {
+    if ([chosenOperation isEqualToString: @"+"]) {
         [self.operation addition];
-    } else if ([chosenOperation  isEqual: @"-"]) {
+    } else if ([chosenOperation  isEqualToString: @"−"]) {
         [self.operation subtraction];
-    } else if ([chosenOperation isEqual: @"×"]) {
+    } else if ([chosenOperation isEqualToString: @"×"]) {
         [self.operation multiplication];
-    } else if ([chosenOperation isEqual: @"÷"]) {
+    } else if ([chosenOperation isEqualToString: @"÷"]) {
         [self.operation division];
+        
+        if(self.operation.secondOperand == 0) {
+            resultString = @"Err";
+        }
+        
     }
     
-    NSString *resultString = [self getStringFromNSInteger:self.operation.result];
-    [self updateLabel:self.firstOperandAndAnswerLabel with:resultString];
+    if(![resultString isEqual: @"Err"]) {
+        resultString = [self getStringFromNSInteger:self.operation.result];
+    }
     
-    [self updateLabel:self.operationSignLabel with:@""];
-    [self updateLabel:self.secondOperandLabel with:@""];
-    
-    self.operation.firstOperand = self.operation.result;
-    self.operation.secondOperand = 0;
+    [self updateViewFirstOperandAndAnswerLabel:resultString secondOperand:@"" operationSign:@""];
+    [self updateModelFirstOperand:self.operation.result secondOperand:0];
 }
 
-- (IBAction)buildOperand:(UIButton*)sender {
+- (IBAction)getOperand:(UIButton*)sender {
     NSInteger buttonValue = sender.currentTitle.integerValue;
     
     if ([@(self.operation.firstOperand) isEqual: @0]) {
@@ -74,31 +103,26 @@
         self.operation.firstOperand = buttonValue;
         NSString *firstOperandString = [self getStringFromNSInteger:self.operation.firstOperand];
         
-        [self updateLabel:self.firstOperandAndAnswerLabel with:firstOperandString];
+        [self updateViewFirstOperandAndAnswerLabel:firstOperandString secondOperand:self.secondOperandLabel.text operationSign:self.operationSignLabel.text];
         
     } else if([@(self.operation.secondOperand) isEqual: @0]) {
         
         self.operation.secondOperand = buttonValue;
-        
         NSString *secondOperandString = [self getStringFromNSInteger:self.operation.secondOperand];
-        [self updateLabel:self.secondOperandLabel with:secondOperandString];
+        
+        [self updateViewFirstOperandAndAnswerLabel:self.firstOperandAndAnswerLabel.text secondOperand:secondOperandString operationSign:self.operationSignLabel.text];
     }
+    
 }
 
 - (IBAction)allClear:(UIButton*)sender {
     [self.operation reset];
+    [self updateViewFirstOperandAndAnswerLabel:@"" secondOperand:@"" operationSign:@""];
     
-    [self updateLabel:self.firstOperandAndAnswerLabel with:@"0"];
-    [self updateLabel:self.secondOperandLabel with:@""];
-    [self updateLabel:self.operationSignLabel with:@""];
 }
 
 - (IBAction)updateSign:(UIButton*)sender {
     self.operationSignLabel.text = sender.currentTitle;
-}
-
-- (void)updateLabel:(UILabel*)label with:(NSString*)text {
-    label.text = text;
 }
 
 - (NSString*)getStringFromNSInteger:(NSInteger)integer {
