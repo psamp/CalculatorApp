@@ -91,33 +91,40 @@
         resultString = [self getStringFromNSInteger:self.operation.result];
     }
     
-    [self updateViewFirstOperandAndAnswerLabel:resultString secondOperand:@"" operationSign:@""];
+    [self updateViewFirstOperandAndAnswerLabel:resultString
+                                 secondOperand:@""
+                                 operationSign:@""];
     [self updateModelFirstOperand:self.operation.result secondOperand:0];
 }
 
 - (IBAction)getOperand:(UIButton*)sender {
-    NSInteger buttonValue = sender.currentTitle.integerValue;
+    NSString *buttonValue = sender.currentTitle;
     
-    if ([@(self.operation.firstOperand) isEqual: @0]) {
+    if ([self.operationSignLabel.text isEqual:@""]) {
+        NSString *firstOperand = [self getStringFromNSInteger:self.operation.firstOperand];
         
-        self.operation.firstOperand = buttonValue;
-        NSString *firstOperandString = [self getStringFromNSInteger:self.operation.firstOperand];
+        [self updateViewFirstOperandAndAnswerLabel:[firstOperand stringByAppendingString:buttonValue]
+                                     secondOperand:self.secondOperandLabel.text
+                                     operationSign:self.operationSignLabel.text];
         
-        [self updateViewFirstOperandAndAnswerLabel:firstOperandString secondOperand:self.secondOperandLabel.text operationSign:self.operationSignLabel.text];
+    } else {
+        NSString *secondOperand = [self getStringFromNSInteger:self.operation.secondOperand];
         
-    } else if([@(self.operation.secondOperand) isEqual: @0]) {
-        
-        self.operation.secondOperand = buttonValue;
-        NSString *secondOperandString = [self getStringFromNSInteger:self.operation.secondOperand];
-        
-        [self updateViewFirstOperandAndAnswerLabel:self.firstOperandAndAnswerLabel.text secondOperand:secondOperandString operationSign:self.operationSignLabel.text];
+        [self updateViewFirstOperandAndAnswerLabel:self.firstOperandAndAnswerLabel.text
+                                     secondOperand:[secondOperand stringByAppendingString:buttonValue]
+                                     operationSign:self.operationSignLabel.text];
     }
+    
+    [self updateModelFirstOperand:self.firstOperandAndAnswerLabel.text.integerValue
+                    secondOperand:self.secondOperandLabel.text.integerValue];
     
 }
 
 - (IBAction)allClear:(UIButton*)sender {
     [self.operation reset];
-    [self updateViewFirstOperandAndAnswerLabel:@"" secondOperand:@"" operationSign:@""];
+    [self updateViewFirstOperandAndAnswerLabel:@""
+                                 secondOperand:@""
+                                 operationSign:@""];
     
 }
 

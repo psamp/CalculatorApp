@@ -40,6 +40,8 @@
     
     if(self.secondOperand != 0) {
         self.result = self.firstOperand / self.secondOperand;
+    } else {
+        [self reset];
     }
 }
 
