@@ -17,10 +17,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *clearButton;
 
 @property(nonatomic, strong) Operation *operation;
-@property (nonatomic, copy) NSString *operationSign;
 
 - (IBAction)calculate:(UIButton*)sender;
 - (IBAction)getOperand:(UIButton*)sender;
+- (IBAction)convertOperandToPositiveOrNegative;
 - (IBAction)clear;
 
 - (void)updateViewFirstOperandAndAnswerLabel:(NSString*)firstOperandAndAnswer
@@ -124,6 +124,31 @@
     
     [self updateModelFirstOperand:self.firstOperandAndAnswerLabel.text.integerValue
                     secondOperand:self.secondOperandLabel.text.integerValue];
+    
+}
+
+-(IBAction)convertOperandToPositiveOrNegative {
+    
+    NSInteger flippedOperand = 0;
+    
+    if([self.operationSignLabel.text isEqualToString:@""]) {
+        flippedOperand = self.operation.firstOperand * -1;
+        
+        [self updateModelFirstOperand:flippedOperand
+                        secondOperand:self.secondOperandLabel.text.integerValue];
+    } else {
+        flippedOperand = self.operation.secondOperand * -1;
+        
+        [self updateModelFirstOperand:self.operation.firstOperand
+                        secondOperand:flippedOperand];
+    }
+    
+    NSString *newSecondOperandString = [NSString string];
+    
+    [self updateViewFirstOperandAndAnswerLabel:[self getStringFromNSInteger:self.operation.firstOperand]
+                                 secondOperand: [self getStringFromNSInteger:self.operation.secondOperand]
+                                 operationSign:self.operationSignLabel.text
+                                   clearButton:self.clearButton.currentTitle];
     
 }
 
