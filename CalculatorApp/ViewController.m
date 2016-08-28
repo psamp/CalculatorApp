@@ -14,17 +14,18 @@
 @property (strong, nonatomic) IBOutlet UILabel *firstOperandAndAnswerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *secondOperandLabel;
 @property (strong, nonatomic) IBOutlet UILabel *operationSignLabel;
+@property (strong, nonatomic) IBOutlet UIButton *clearButton;
 
 @property(nonatomic, strong) Operation *operation;
 @property (nonatomic, copy) NSString *operationSign;
 
 - (IBAction)calculate:(UIButton*)sender;
 - (IBAction)getOperand:(UIButton*)sender;
-- (IBAction)allClear:(UIButton*)sender;
+- (IBAction)clear;
 
 - (void)updateViewFirstOperandAndAnswerLabel:(NSString*)firstOperandAndAnswer
                                secondOperand:(NSString*)secondOperand
-                               operationSign:(NSString*)sign;
+                               operationSign:(NSString*)sign clearButton:(NSString *)clear;
 
 - (void)updateModelFirstOperand:(NSInteger)firstOperand
                   secondOperand:(NSInteger)secondOperand;
@@ -48,11 +49,14 @@
 
 - (void)updateViewFirstOperandAndAnswerLabel:(NSString *)firstOperandAndAnswer
                                secondOperand:(NSString *)secondOperand
-                               operationSign:(NSString *)sign {
+                               operationSign:(NSString *)sign
+                                 clearButton:(NSString *)clear {
+    
     self.firstOperandAndAnswerLabel.text = firstOperandAndAnswer;
     self.secondOperandLabel.text = secondOperand;
     self.operationSignLabel.text = sign;
     
+    [self.clearButton setTitle:clear forState:UIControlStateNormal];
 }
 
 - (void)updateModelFirstOperand:(NSInteger)firstOperand
@@ -93,26 +97,29 @@
     
     [self updateViewFirstOperandAndAnswerLabel:resultString
                                  secondOperand:@""
-                                 operationSign:@""];
+                                 operationSign:@""
+                                   clearButton:@"C"];
     [self updateModelFirstOperand:self.operation.result secondOperand:0];
 }
 
 - (IBAction)getOperand:(UIButton*)sender {
     NSString *buttonValue = sender.currentTitle;
     
-    if ([self.operationSignLabel.text isEqual:@""]) {
+    if ([self.operationSignLabel.text isEqualToString:@""]) {
         NSString *firstOperand = [self getStringFromNSInteger:self.operation.firstOperand];
         
         [self updateViewFirstOperandAndAnswerLabel:[firstOperand stringByAppendingString:buttonValue]
                                      secondOperand:self.secondOperandLabel.text
-                                     operationSign:self.operationSignLabel.text];
+                                     operationSign:self.operationSignLabel.text
+                                       clearButton:@"C"];
         
     } else {
         NSString *secondOperand = [self getStringFromNSInteger:self.operation.secondOperand];
         
         [self updateViewFirstOperandAndAnswerLabel:self.firstOperandAndAnswerLabel.text
                                      secondOperand:[secondOperand stringByAppendingString:buttonValue]
-                                     operationSign:self.operationSignLabel.text];
+                                     operationSign:self.operationSignLabel.text
+                                       clearButton:@"C"];
     }
     
     [self updateModelFirstOperand:self.firstOperandAndAnswerLabel.text.integerValue
@@ -120,11 +127,31 @@
     
 }
 
-- (IBAction)allClear:(UIButton*)sender {
-    [self.operation reset];
-    [self updateViewFirstOperandAndAnswerLabel:@""
-                                 secondOperand:@""
-                                 operationSign:@""];
+- (IBAction)clear {
+    
+    if([self.clearButton.currentTitle isEqualToString: @"AC"]) {
+        [self.operation reset];
+        
+        [self updateViewFirstOperandAndAnswerLabel:@""
+                                     secondOperand:@""
+                                     operationSign:@""
+                                       clearButton:@"AC"];
+        
+    }
+    
+    if([self.operationSignLabel.text isEqualToString:@""]) {
+        [self updateViewFirstOperandAndAnswerLabel:@""
+                                     secondOperand:@"" operationSign:self.operationSignLabel.text
+                                       clearButton:@"AC"];
+    } else {
+        [self updateViewFirstOperandAndAnswerLabel:self.firstOperandAndAnswerLabel.text
+                                     secondOperand:@"" operationSign:self.operationSignLabel.text
+                                       clearButton:@"AC"];
+        
+    }
+    
+    [self updateModelFirstOperand:self.firstOperandAndAnswerLabel.text.integerValue
+                    secondOperand:self.secondOperandLabel.text.integerValue];
     
 }
 
