@@ -51,4 +51,12 @@
     self.result = 0;
 }
 
+-(void)clear {
+    if(self.firstOperand != 0 && self.secondOperand == 0){
+        self.firstOperand = 0;
+    } else {
+        self.secondOperand = 0;
+    }
+}
+
 @end

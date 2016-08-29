@@ -16,6 +16,7 @@
 @property (nonatomic, readonly) NSInteger result;
 
 -(void)reset;
+-(void)clear;
 -(void) addition;
 -(void) subtraction;
 -(void) multiplication;

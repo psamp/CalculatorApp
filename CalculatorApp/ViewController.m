@@ -25,7 +25,8 @@
 
 - (void)updateViewFirstOperandAndAnswerLabel:(NSString*)firstOperandAndAnswer
                                secondOperand:(NSString*)secondOperand
-                               operationSign:(NSString*)sign clearButton:(NSString *)clear;
+                               operationSign:(NSString*)sign clearButton:(NSString *)clear
+                              clearIsEnabled:(BOOL)clearIsEnabled;
 
 - (void)updateModelFirstOperand:(NSInteger)firstOperand
                   secondOperand:(NSInteger)secondOperand;
@@ -40,6 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.operation = [[Operation  alloc] init];
+    [self.clearButton setEnabled:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,13 +52,15 @@
 - (void)updateViewFirstOperandAndAnswerLabel:(NSString *)firstOperandAndAnswer
                                secondOperand:(NSString *)secondOperand
                                operationSign:(NSString *)sign
-                                 clearButton:(NSString *)clear {
+                                 clearButton:(NSString *)clear
+                              clearIsEnabled:(BOOL)clearIsEnabled {
     
     self.firstOperandAndAnswerLabel.text = firstOperandAndAnswer;
     self.secondOperandLabel.text = secondOperand;
     self.operationSignLabel.text = sign;
     
     [self.clearButton setTitle:clear forState:UIControlStateNormal];
+    [self.clearButton setEnabled:clearIsEnabled];
 }
 
 - (void)updateModelFirstOperand:(NSInteger)firstOperand
@@ -98,7 +102,9 @@
     [self updateViewFirstOperandAndAnswerLabel:resultString
                                  secondOperand:@""
                                  operationSign:@""
-                                   clearButton:@"C"];
+                                   clearButton:@"AC"
+                                clearIsEnabled:YES];
+    
     [self updateModelFirstOperand:self.operation.result secondOperand:0];
 }
 
@@ -111,7 +117,8 @@
         [self updateViewFirstOperandAndAnswerLabel:[firstOperand stringByAppendingString:buttonValue]
                                      secondOperand:self.secondOperandLabel.text
                                      operationSign:self.operationSignLabel.text
-                                       clearButton:@"C"];
+                                       clearButton:@"C"
+                                    clearIsEnabled: YES];
         
     } else {
         NSString *secondOperand = [self getStringFromNSInteger:self.operation.secondOperand];
@@ -119,12 +126,12 @@
         [self updateViewFirstOperandAndAnswerLabel:self.firstOperandAndAnswerLabel.text
                                      secondOperand:[secondOperand stringByAppendingString:buttonValue]
                                      operationSign:self.operationSignLabel.text
-                                       clearButton:@"C"];
+                                       clearButton:@"C"
+                                    clearIsEnabled:YES];
     }
     
     [self updateModelFirstOperand:self.firstOperandAndAnswerLabel.text.integerValue
                     secondOperand:self.secondOperandLabel.text.integerValue];
-    
 }
 
 -(IBAction)convertOperandToPositiveOrNegative {
@@ -143,40 +150,47 @@
                         secondOperand:flippedOperand];
     }
     
-    NSString *newSecondOperandString = [NSString string];
-    
-    [self updateViewFirstOperandAndAnswerLabel:[self getStringFromNSInteger:self.operation.firstOperand]
+    [self updateViewFirstOperandAndAnswerLabel: [self getStringFromNSInteger:self.operation.firstOperand]
                                  secondOperand: [self getStringFromNSInteger:self.operation.secondOperand]
                                  operationSign:self.operationSignLabel.text
-                                   clearButton:self.clearButton.currentTitle];
+                                   clearButton:self.clearButton.currentTitle
+                                clearIsEnabled:YES];
     
 }
 
 - (IBAction)clear {
     
-    if([self.clearButton.currentTitle isEqualToString: @"AC"]) {
+    if([self.clearButton.currentTitle  isEqualToString: @"AC"]) {
         [self.operation reset];
         
         [self updateViewFirstOperandAndAnswerLabel:@""
                                      secondOperand:@""
                                      operationSign:@""
-                                       clearButton:@"AC"];
+                                       clearButton:@"AC"
+                                    clearIsEnabled:NO];
         
-    }
-    
-    if([self.operationSignLabel.text isEqualToString:@""]) {
-        [self updateViewFirstOperandAndAnswerLabel:@""
-                                     secondOperand:@"" operationSign:self.operationSignLabel.text
-                                       clearButton:@"AC"];
-    } else {
-        [self updateViewFirstOperandAndAnswerLabel:self.firstOperandAndAnswerLabel.text
-                                     secondOperand:@"" operationSign:self.operationSignLabel.text
-                                       clearButton:@"AC"];
+    } else if([self.clearButton.currentTitle isEqualToString: @"C"]) {
+        [self.operation clear];
         
+        if([self.secondOperandLabel.text isEqualToString:@""]) {
+            
+            [self updateViewFirstOperandAndAnswerLabel: [self getStringFromNSInteger:self.operation.firstOperand]
+                                         secondOperand:@""
+                                         operationSign:self.operationSignLabel.text
+                                           clearButton:@"AC"
+             
+                                        clearIsEnabled:YES];
+        } else {
+            
+            [self updateViewFirstOperandAndAnswerLabel: [self getStringFromNSInteger:self.operation.firstOperand]
+                                         secondOperand:[self getStringFromNSInteger:self.operation.secondOperand]
+                                         operationSign:self.operationSignLabel.text
+                                           clearButton:@"AC"
+             
+                                        clearIsEnabled:YES];
+            
+        }
     }
-    
-    [self updateModelFirstOperand:self.firstOperandAndAnswerLabel.text.integerValue
-                    secondOperand:self.secondOperandLabel.text.integerValue];
     
 }
 
